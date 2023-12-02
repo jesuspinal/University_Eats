@@ -1,3 +1,8 @@
+/**
+ * Jesus Pinales owj958
+ * cafeReviewActivity will handle the review input from user.
+ * here we will create and save the users review, and the option to delete the review too.
+ */
 package edu.utsa.cs3443.universityeats;
 
 import androidx.appcompat.app.AlertDialog;
@@ -20,12 +25,14 @@ public class cafeReviewActivity extends AppCompatActivity implements View.OnClic
 
     private static final String PREFS_NAME = "CafeReviewPrefs";
     private static final String KEY_REVIEW_COUNT = "ReviewCount";
-
     private static final String CAFE_PREFIX = "cafe_";
+    private static final String LOCATION_PREFIX = "location_"; //for new locations
+
 
 
     private LinearLayout reviewContainer;
     private List<CafeReviews> reviewList;
+    private String currentLocationId; // store current location
 
     Button homeButton;
 
@@ -36,14 +43,17 @@ public class cafeReviewActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_cafe_review);
 
 
-
+        // UI elements
         reviewContainer = findViewById(R.id.reviewContainer);
         Button saveButton = findViewById(R.id.saveButton);
 
+        // Initialize variables
         reviewList = new ArrayList<>();
 
         saveButton.setOnClickListener(v -> saveReview());
-        loadReviewsFromPreferences();
+
+        currentLocationId = "Cafe";
+        loadReviewsFromPreferences(currentLocationId);
         displayReviews();
 
         homeButton = findViewById(R.id.homeButton);
@@ -52,14 +62,21 @@ public class cafeReviewActivity extends AppCompatActivity implements View.OnClic
 
     }
 
+    /**
+     * Display reviews in the UI
+     */
     private void displayReviews() {
         for(CafeReviews reviews : reviewList){
             createReviewView(reviews);
         }
     }
 
-    private void loadReviewsFromPreferences() {
-        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+    /**
+     * Load existing reviews from sharedpreference
+     * @param locationId location of review
+     */
+    private void loadReviewsFromPreferences(String locationId) {
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME + "-" + locationId, MODE_PRIVATE);
         int reviewCount = sharedPreferences.getInt(KEY_REVIEW_COUNT, 0);
 
         for(int i = 0; i < reviewCount; i++){
@@ -75,6 +92,9 @@ public class cafeReviewActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+    /**
+     * Save users review to sharedpreference
+     */
     private void saveReview() {
         EditText titleEditText = findViewById(R.id.titleEditText);
         EditText contentEditText = findViewById(R.id.contentEditText);
@@ -85,14 +105,15 @@ public class cafeReviewActivity extends AppCompatActivity implements View.OnClic
         if(!title.isEmpty() && !content.isEmpty()){
             String userEmail = getUserEmailFromPreferences();
 
-
+            // Create cafe reviews with user review
             CafeReviews review = new CafeReviews();
             review.setTitle(title);
             review.setContent(content);
             review.setUserEmail(userEmail);
 
+            // add review to list
             reviewList.add(review);
-            saveReviewsToPreferences();
+            saveReviewsToPreferences(currentLocationId);
 
             createReviewView(review);
             clearInputFields();
@@ -100,11 +121,30 @@ public class cafeReviewActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    private String getUserEmailFromPreferences() {
+    /**
+     * Save users email
+     * @param userEmail save email to sharedpreference
+     */
+    private void saveUserEmailToPreferences(String userEmail){
         SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
-        return preferences.getString("user_email", "");
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("user_email", userEmail);
+        editor.apply();
     }
 
+    /**
+     * @return Retrieve email from shared preference
+     */
+    private String getUserEmailFromPreferences() {
+        SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
+        String userEmail = preferences.getString("user_email", "");
+        //return preferences.getString("user_email", "");
+        return userEmail;
+    }
+
+    /**
+     * clear input field after saving review
+     */
     private void clearInputFields() {
         EditText titleEditText = findViewById(R.id.titleEditText);
         EditText contentEditText = findViewById(R.id.contentEditText);
@@ -113,6 +153,9 @@ public class cafeReviewActivity extends AppCompatActivity implements View.OnClic
         contentEditText.getText().clear();
     }
 
+    /**
+     * @param review create review for display review
+     */
     private void createReviewView(final CafeReviews review) {
         View reviewView = getLayoutInflater().inflate(R.layout.review_item, null);
         TextView titleTextView = reviewView.findViewById(R.id.titleTextView);
@@ -134,6 +177,9 @@ public class cafeReviewActivity extends AppCompatActivity implements View.OnClic
         reviewContainer.addView(reviewView);
     }
 
+    /**
+     * @param review show confimation for deleted review
+     */
     private void showDeleteDialog(final CafeReviews review) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Delete Review");
@@ -150,19 +196,28 @@ public class cafeReviewActivity extends AppCompatActivity implements View.OnClic
 
     }
 
+    /**
+     * @param review delete review, save changes
+     */
     private void deleteReviewAndRefresh(CafeReviews review) {
         reviewList.remove(review);
-        saveReviewsToPreferences();
+        saveReviewsToPreferences(currentLocationId);
         refreshNoteViews();
     }
 
+    /**
+     * Refresh UI, display updated reviews
+     */
     private void refreshNoteViews() {
         reviewContainer.removeAllViews();
         displayReviews();
     }
 
-    private void saveReviewsToPreferences() {
-        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+    /**
+     * @param locationId save reviews to sharedpreference for location
+     */
+    private void saveReviewsToPreferences(String locationId) {
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME + "-" + locationId, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putInt(KEY_REVIEW_COUNT, reviewList.size());
@@ -178,8 +233,12 @@ public class cafeReviewActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         Intent i;
-        if(v.getId() == R.id.homeButton){
-            i = new Intent(this, HomeActivity.class);
+        if (v.getId() == R.id.reviewButton) {
+            i = new Intent(this, cafeReviewActivity.class);
+            startActivity(i);
+        }
+        else if(v.getId() == R.id.homeButton){
+            i = new Intent(this, ScrollHomeActivity.class);
             startActivity(i);
         }
 

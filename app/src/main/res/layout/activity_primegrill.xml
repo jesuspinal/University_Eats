@@ -91,58 +91,25 @@
 
 
         <TextView
+            android:id="@+id/reviewsTextView"
             android:layout_width="315dp"
-            android:layout_height="155dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
             android:layout_gravity="center_horizontal"
-            android:text="UTSA Dining's Residential Restaurant offers a variety of fresh food options for all lifestyles!
-No meal plan? No problem! Everyone is welcome to dine at the Roadrunner Café, our door rate is one of the best deals you can find in San Antonio!"
             android:textColor="@color/black"
+            android:textStyle="bold"
             android:textSize="18sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginBottom="150dp"
-            android:text=" Location:"
-            android:textStyle="bold">
-
-        </TextView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginBottom="130dp"
-            android:text=" Roadrunner Café">
-
-        </TextView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginBottom="110dp"
-            android:text=" 1 UTSA Circle">
-
-        </TextView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginBottom="90dp"
-            android:text=" San Antonio, TX 78249">
-
-        </TextView>
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imageView2"
             android:layout_width="256dp"
-            android:layout_height="357dp"
-            android:layout_marginTop="250dp"
-            android:layout_marginRight="40dp"
-            app:srcCompat="@drawable/rowdycafehours" />
+            android:layout_height="202dp"
+            android:layout_marginTop="400dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="44dp"
+            app:srcCompat="@drawable/primegrill"
+            android:contentDescription="@string/burger" />
 
     </androidx.cardview.widget.CardView>
 

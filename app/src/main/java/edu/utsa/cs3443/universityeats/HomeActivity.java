@@ -1,3 +1,7 @@
+/**
+ * Jesus Pinales owj958
+ * This a demo, was the first home activity before switching to a scrolling home activity
+ */
 package edu.utsa.cs3443.universityeats;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -70,10 +74,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             i = new Intent(this, HomeActivity2.class);
             startActivity(i);
         }
-
-
-
-
 
     }
 }

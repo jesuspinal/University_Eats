@@ -35,14 +35,17 @@
     </RelativeLayout>
 
     <GridLayout
+
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="8"
         android:columnCount="2"
         android:rowCount="3"
         android:alignmentMode="alignMargins"
         android:columnOrderPreserved="false"
         android:padding="15dp">
+
+
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cafe"
@@ -297,6 +300,11 @@
         </androidx.cardview.widget.CardView>
     </GridLayout>
 
+
+
+
+
+
     <Button
         android:id="@+id/nextPage"
         android:layout_width="wrap_content"
@@ -308,6 +316,5 @@
         android:textStyle="bold"
         android:textSize="18sp"
         app:cornerRadius="20dp" />
-
 
 </LinearLayout>

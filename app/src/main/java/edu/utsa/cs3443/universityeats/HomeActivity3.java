@@ -1,3 +1,8 @@
+/**
+ * Jesus Pinales owj958
+ * Part of the demo, this was the third page displaying the last location after user pressed "Next Page",
+ * button again. Not used in app
+ */
 package edu.utsa.cs3443.universityeats;
 
 import androidx.appcompat.app.AppCompatActivity;

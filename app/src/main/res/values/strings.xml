@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">UniversityEats</string>
+    <string name="user1">User:</string>
+    <string name="burger">burger</string>
 </resources>

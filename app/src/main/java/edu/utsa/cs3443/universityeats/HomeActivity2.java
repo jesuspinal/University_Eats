@@ -1,3 +1,8 @@
+/**
+ * Jesus Pinales owj958
+ * This was part of the demo, this is a second home/main menu, before scrolling user would press "Next page" button
+ * and bring them here, not used in app
+ */
 package edu.utsa.cs3443.universityeats;
 
 import androidx.appcompat.app.AppCompatActivity;

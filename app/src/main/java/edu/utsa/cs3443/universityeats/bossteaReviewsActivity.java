@@ -1,3 +1,8 @@
+/**
+ * Jesus Pinales owj958
+ * bossteaReviewsActivity will handle the reviews section of boss tea.
+ * here we will create and save the users review, and the option to delete the review too.
+ */
 package edu.utsa.cs3443.universityeats;
 
 import androidx.appcompat.app.AlertDialog;
@@ -32,9 +37,11 @@ public class bossteaReviewsActivity extends AppCompatActivity implements View.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bosstea_reviews);
 
+        //UI elements, buttons, clickers
         reviewContainer = findViewById(R.id.reviewContainer);
         Button saveButton = findViewById(R.id.saveButton);
 
+        //Review list
         reviewList = new ArrayList<>();
 
         saveButton.setOnClickListener(v -> saveReview());
@@ -45,12 +52,18 @@ public class bossteaReviewsActivity extends AppCompatActivity implements View.On
         homeButton.setOnClickListener((View.OnClickListener)this);
     }
 
+    /**
+     * Display all reviews for boss tea
+     */
     private void displayReviews() {
         for(BossteaReviews reviews : reviewList){
             createReviewView(reviews);
         }
     }
 
+    /**
+     * Load reviews from SharedPreference
+     */
     private void loadReviewsFromPreferences() {
         SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         int reviewCount = sharedPreferences.getInt(KEY_REVIEW_COUNT, 0);
@@ -68,13 +81,18 @@ public class bossteaReviewsActivity extends AppCompatActivity implements View.On
         }
     }
 
+    /**
+     * Save new reviews of user
+     */
     private void saveReview() {
         EditText titleEditText = findViewById(R.id.titleEditText);
         EditText contentEditText = findViewById(R.id.contentEditText);
 
+        //Review title and content input
         String title = titleEditText.getText().toString();
         String content = contentEditText.getText().toString();
 
+        //Check if title and content are not empty
         if(!title.isEmpty() && !content.isEmpty()){
             String userEmail = getUserEmailFromPreferences();
 
@@ -94,11 +112,18 @@ public class bossteaReviewsActivity extends AppCompatActivity implements View.On
         }
     }
 
+    /**
+     * Get the users email from sharedpreference
+     * @return return email
+     */
     private String getUserEmailFromPreferences() {
         SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
         return preferences.getString("user_email", "");
     }
 
+    /**
+     * After saving a review, clear the input section, for new review
+     */
     private void clearInputFields() {
         EditText titleEditText = findViewById(R.id.titleEditText);
         EditText contentEditText = findViewById(R.id.contentEditText);
@@ -107,12 +132,17 @@ public class bossteaReviewsActivity extends AppCompatActivity implements View.On
         contentEditText.getText().clear();
     }
 
+    /**
+     * Create a review to display
+     * @param review
+     */
     private void createReviewView(final BossteaReviews review) {
         View reviewView = getLayoutInflater().inflate(R.layout.review_item, null);
         TextView titleTextView = reviewView.findViewById(R.id.titleTextView);
         TextView contentTextView = reviewView.findViewById(R.id.contentTextView);
         TextView userTextView = reviewView.findViewById(R.id.userTextView);
 
+        //Set the text
         titleTextView.setText(review.getTitle());
         contentTextView.setText(review.getContent());
         userTextView.setText("User: " + review.getUserEmail());
@@ -144,6 +174,10 @@ public class bossteaReviewsActivity extends AppCompatActivity implements View.On
 
     }
 
+    /**
+     * Delete review from section
+     * @param review refresh UI when deleted review
+     */
     private void deleteReviewAndRefresh(BossteaReviews review) {
         reviewList.remove(review);
         saveReviewsToPreferences();
@@ -155,6 +189,9 @@ public class bossteaReviewsActivity extends AppCompatActivity implements View.On
         displayReviews();
     }
 
+    /**
+     * Save reviews to sharedpreferences
+     */
     private void saveReviewsToPreferences() {
         SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -169,11 +206,16 @@ public class bossteaReviewsActivity extends AppCompatActivity implements View.On
 
 
     }
+
+    /**
+     * Handle the button to go back to main screen, Home
+     * @param v The view that was clicked.
+     */
     @Override
     public void onClick(View v) {
         Intent i;
         if(v.getId() == R.id.homeButton){
-            i = new Intent(this, HomeActivity.class);
+            i = new Intent(this, ScrollHomeActivity.class);
             startActivity(i);
         }
 

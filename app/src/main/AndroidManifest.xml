@@ -13,7 +13,52 @@
         android:theme="@style/Theme.UniversityEats"
         tools:targetApi="31">
         <activity
-            android:name=".BossteaReviewsActivity"
+            android:name=".ScrollHomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PizzahutReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".JavaActivityReview"
+            android:exported="false" />
+        <activity
+            android:name=".PrimegrillReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RisingrollActivityReview"
+            android:exported="false" />
+        <activity
+            android:name=".FreebirdActivityReview"
+            android:exported="false" />
+        <activity
+            android:name=".PandaReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MeximumReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SmoothieReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RowdyReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SushiReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SubwayReviewsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChicfilaReviewsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StarbucksReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".freshensReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bossteaReviewsActivity"
             android:exported="false" />
         <activity
             android:name=".cafeReviewActivity"
